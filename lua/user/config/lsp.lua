@@ -1,4 +1,5 @@
 return function()
+    local vim = vim
 
     -- Mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -50,4 +51,20 @@ return function()
         on_attach = on_attach,
         flags = lsp_flags,
     }
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+    require'lspconfig'.sumneko_lua.setup{
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+            Lua = {
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file("",true),
+                }
+            }
+        }
+    }
+
 end
