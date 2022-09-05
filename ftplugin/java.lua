@@ -1,6 +1,7 @@
+local vim = vim
+local home = os.getenv"HOME"
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(),':p:h:t')
-local workspace_dir = '/Users/staff/workspace/'..project_name
-
+local workspace_dir = home..'/workspace/'..project_name
 
 
 local null_ls = require'null-ls';
@@ -13,7 +14,6 @@ null_ls.setup{
 }
 
 
-
 local cmp_nvim_lsp = require('cmp_nvim_lsp')
 
 local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -21,10 +21,10 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 local bundles = {
-    vim.fn.glob('/Users/staff/OSProjects/Neovim/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar')
+    vim.fn.glob( home .. '/OSProjects/Neovim/microsoft/java-debug/com.microsoft.java.debug.plugin/target/com.microsoft.java.debug.plugin-*.jar')
 }
 
-vim.list_extend(bundles, vim.split(vim.fn.glob("/Users/staff/OSProjects/Neovim/vscode-java-test/server/*.jar"), "\n"))
+vim.list_extend(bundles, vim.split(vim.fn.glob( home .. "/OSProjects/Neovim/microsoft/vscode-java-test/server/*.jar"), "\n"))
 
 local on_attach = function(client, bufnr)
     require'jdtls.setup'.add_commands()
@@ -45,8 +45,8 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
     vim.api.nvim_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-    vim.api.nvim_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-    vim.api.nvim_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+    vim.api.nvim_set_keymap('n', '<leader>dn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+    vim.api.nvim_set_keymap('n', '<leader>dp', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
     vim.api.nvim_set_keymap('n', '<leader>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
     --local bind = vim.api.nvim_buf_set_keymap
@@ -86,7 +86,7 @@ local config = {
   cmd = {
 
     -- 💀
-    '/Users/staff/.sdkman/candidates/java/17.0.4-tem/bin/java', -- or '/path/to/java17_or_newer/bin/java'
+    home..'/.sdkman/candidates/java/18.0.2.1-open/bin/java', -- or '/path/to/java17_or_newer/bin/java'
             -- depends on if `java` is in your $PATH env variable and if it points to the right version.
 
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
@@ -94,21 +94,21 @@ local config = {
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
     '-Dlog.protocol=true',
     '-Dlog.level=ALL',
-    '-javaagent:/Users/staff/OSProjects/Binaries/lombok.jar',
+    '-javaagent:'..home..'/OSProjects/Binaries/lombok.jar',
     '-Xms1g',
     '--add-modules=ALL-SYSTEM',
-    '--add-opens', 
+    '--add-opens',
     'java.base/java.util=ALL-UNNAMED',
-    '--add-opens', 
+    '--add-opens',
     'java.base/java.lang=ALL-UNNAMED',
 
     -- 💀
-    '-jar', vim.fn.glob('/Users/staff/OSProjects/Neovim/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher_*.jar'),
+    '-jar', vim.fn.glob(home..'/OSProjects/Neovim/eclipse/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/plugins/org.eclipse.equinox.launcher_*.jar'),
          -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
          -- Must point to the                                                     Change this to
          -- eclipse.jdt.ls installation                                           the actual version
     -- 💀
-    '-configuration', '/Users/staff/OSProjects/Neovim/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/config_linux',
+    '-configuration', home..'/OSProjects/Neovim/eclipse/eclipse.jdt.ls/org.eclipse.jdt.ls.product/target/repository/config_linux',
                     -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
                     -- Must point to the                      Change to one of `linux`, `win` or `mac`
                     -- eclipse.jdt.ls installation            Depending on your system.
@@ -121,7 +121,7 @@ local config = {
   -- This is the default if not provided, you can remove it. Or adjust as needed.
   -- One dedicated LSP server & client will be started per unique root_dir
   root_dir = require('jdtls.setup').find_root({'pom.xml','.git', 'mvnw', 'gradlew'}),
-  capabilities = capabilities,
+  --capabilities = capabilities,
   on_attach = on_attach,
     flags = {
         allow_incremental_sync = true
@@ -159,15 +159,19 @@ local config = {
             runtimes = {
                 {
                     name = 'JavaSE-11',
-                    path = '/Users/staff/.sdkman/candidates/java/11.0.16-tem'
+                    path = home..'/.sdkman/candidates/java/11.0.12-open'
                 },
                 {
                     name = 'JavaSE-17',
-                    path = '/Users/staff/.sdkman/candidates/java/17.0.4-tem'
+                    path = home..'/.sdkman/candidates/java/17.0.4-amzn'
+                },
+                {
+                    name = 'JavaSE-18',
+                    path = home..'/.sdkman/candidates/java/18.0.2.1-open'
                 },
                 {
                     name = 'JavaSE-1.8',
-                    path = '/Users/staff/.sdkman/candidates/java/8.0.345-tem'
+                    path = home..'/.sdkman/candidates/java/8.0.302-open'
                 },
             }
         },
@@ -187,7 +191,8 @@ local config = {
             "java.util.Objects.requireNonNull",
             "java.util.Objects.requireNonNullElse",
             "org.mockito.Mockito.*",
-            "org.assertj.core.api.Assertions"
+            "org.assertj.core.api.Assertions",
+            "java.nio.files.Files"
           },
       },
     },
