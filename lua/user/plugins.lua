@@ -8,9 +8,9 @@ end
 return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
     use 'EdenEast/nightfox.nvim'
-    use { 'phaazon/hop.nvim',
-        branch = 'v2',
-        config = require'user.config.hop'    
+    use { 'mhartington/oceanic-next' }
+    use { 'phaazon/hop.nvim', branch = 'v2',
+        config = require'user.config.hop'
     }
     use {
       'nvim-telescope/telescope.nvim', tag = '0.1.0',
@@ -41,19 +41,17 @@ return require('packer').startup(function(use)
      use { 'hrsh7th/cmp-cmdline' }
      use { 'hrsh7th/nvim-cmp',
         config = require'user.config.cmp'
-     } 
+     }
      use { 'hrsh7th/cmp-nvim-lua' }
      use { 'hrsh7th/cmp-nvim-lsp' }
      use { 'L3MON4D3/LuaSnip' }
      use { 'saadparwaiz1/cmp_luasnip' }
-     use { 
-         'jose-elias-alvarez/null-ls.nvim',
+     use { 'jose-elias-alvarez/null-ls.nvim',
          config = require'user.config.null-ls',
      }
-     use { 'mhartington/oceanic-next' }
     use { 'TimUntersberger/neogit',
        requires = 'nvim-lua/plenary.nvim',
-       config = require'user.config.neogit'    
+       config = require'user.config.neogit'
    }
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
