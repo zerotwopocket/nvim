@@ -12,6 +12,7 @@ return require('packer').startup(function(use)
     use { 'phaazon/hop.nvim', branch = 'v2',
         config = require'user.config.hop'
     }
+    use { 'kyazdani42/nvim-web-devicons' }
     use {
       'nvim-telescope/telescope.nvim', tag = '0.1.0',
       requires = { {'nvim-lua/plenary.nvim'} },
