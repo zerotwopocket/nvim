@@ -53,6 +53,21 @@ return require('packer').startup(function(use)
        requires = 'nvim-lua/plenary.nvim',
        config = require'user.config.neogit'
    }
+   use {
+        'ahmedkhalf/project.nvim',
+        config = function ()
+           require'project_nvim'.setup{
+                patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "pom.xml", ">IdeaProjects" }, }
+           require'telescope'.load_extension'projects'
+           vim.api.nvim_set_keymap("n","<leader>fpp","<cmd>Telescope projects<CR>",{ noremap = true, silent = true })
+        end
+   }
+   use {
+       'ThePrimeagen/harpoon',
+       config = function ()
+
+       end
+   }
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then
