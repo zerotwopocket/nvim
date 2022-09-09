@@ -1,5 +1,5 @@
 return function()
-    local builtin = require'telescope.builtin' 
+    local builtin = require'telescope.builtin'
     local opts = { noremap=true, silent=true }
     local bind = vim.api.nvim_set_keymap
 
@@ -12,5 +12,8 @@ return function()
     bind("n", "<leader>fjr","<cmd>lua require'user.config.telescope-custom'.find_in_java_resource_dir()<cr>", opts)
     bind("n", "<leader>fjt","<cmd>lua require'user.config.telescope-custom'.find_in_java_test_source_dir()<cr>", opts)
     bind("n", "<leader>fjw","<cmd>lua require'user.config.telescope-custom'.find_in_java_test_resource_dir()<cr>", opts)
+
+
+    bind("n", "<leader>fpc","<cmd>lua require'user.config.telescope-custom'.pick_colors()<cr>", opts)
 
 end
