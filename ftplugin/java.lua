@@ -185,13 +185,13 @@ local config = {
             },
           favoriteStaticMembers = {
             --"org.hamcrest.MatcherAssert.assertThat",
+            "org.assertj.core.api.Assertions",
             "org.hamcrest.Matchers.*",
             "org.hamcrest.CoreMatchers.*",
             "org.junit.jupiter.api.Assertions.*",
             "java.util.Objects.requireNonNull",
             "java.util.Objects.requireNonNullElse",
             "org.mockito.Mockito.*",
-            "org.assertj.core.api.Assertions",
             "java.nio.files.Files"
           },
       },
