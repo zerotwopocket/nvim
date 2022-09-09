@@ -1,1 +1,1 @@
-vim.cmd'colo terafox'
+vim.cmd'colo nightfox'
